@@ -1,118 +1,96 @@
-// **BƯỚC 1: CẦN CHỈNH SỬA NGÀY SINH NHẬT TẠI ĐÂY**
-// Đặt ngày và giờ chính xác bạn muốn bất ngờ (Tháng ngày, Năm Giờ:Phút:Giây)
-// Ví dụ: Ngày 12/12/2025 lúc 00:00:00
-const birthdayDate = new Date("December 12, 2025 00:00:00").getTime(); 
+// --- CẤU HÌNH ---
+// Đổi ngày giờ sinh nhật tại đây (Tháng/Ngày/Năm Giờ:Phút:Giây)
+const targetDate = new Date("December 12, 2025 00:00:00").getTime();
 
-// **BƯỚC 2: CẦN CHỈNH SỬA LỜI CHÚC TẠI ĐÂY**
-// Dùng \n để xuống dòng (newline)
-const message = `Tuy giấy tờ là 12/1, nhưng hôm nay mới là ngày Anh muốn tri ân người con gái tuyệt vời nhất trong đời. Cảm ơn em đã đến bên Anh. Chúc em luôn hạnh phúc, xinh đẹp và mỉm cười thật tươi!
-\nAnh yêu em rất nhiều.`;
-let charIndex = 0;
-const typingSpeed = 50; 
+// Lời chúc của bạn (dùng \n để xuống dòng)
+const message = "Chúc mừng sinh nhật em yêu! 🎉\nTuổi mới rực rỡ, xinh đẹp và luôn hạnh phúc nhé.\nAnh luôn ở đây bên em. Yêu em nhiều! ❤️";
 
-// Khai báo các biến DOM
-const countdownContainer = document.getElementById("countdown-container");
-const surpriseContainer = document.getElementById("surprise-container");
-const typedMessageSpan = document.getElementById('typed-message');
-const signatureText = document.getElementById('signature-text');
-const photos = document.querySelectorAll('.gallery-item');
+// --- LOGIC ---
+const page1 = document.getElementById('countdown-page');
+const page2 = document.getElementById('surprise-page');
+const timerElement = document.getElementById('timer');
 
+// Hàm chạy pháo hoa (dùng thư viện canvas-confetti)
+function startFireworks() {
+    var duration = 15 * 1000; // Pháo hoa bắn trong 15 giây
+    var animationEnd = Date.now() + duration;
+    var defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
 
-/* --- HÀM CHÍNH CHO ĐẾM NGƯỢC --- */
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = birthdayDate - now;
+    var interval = setInterval(function() {
+        var timeLeft = animationEnd - Date.now();
 
-    if (distance < 0) {
-        clearInterval(countdownInterval);
-        showSurprise();
-        return;
+        if (timeLeft <= 0) {
+            return clearInterval(interval);
+        }
+
+        var particleCount = 50 * (timeLeft / duration);
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+        confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+    }, 250);
+}
+
+function randomInRange(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+// Hàm gõ chữ (Typing Effect)
+function typeWriter() {
+    const textElement = document.getElementById('typing-text');
+    let i = 0;
+    const speed = 50; // Tốc độ gõ (ms)
+
+    function type() {
+        if (i < message.length) {
+            textElement.textContent += message.charAt(i);
+            i++;
+            setTimeout(type, speed);
+        } else {
+            // Sau khi gõ xong chữ thì hiện ảnh
+            showPhotos();
+        }
     }
+    type();
+}
 
+// Hàm hiện ảnh
+function showPhotos() {
+    const photos = document.querySelectorAll('.photo');
+    photos.forEach((photo, index) => {
+        setTimeout(() => {
+            photo.classList.add('show');
+        }, index * 500); // Mỗi ảnh hiện cách nhau 0.5 giây
+    });
+}
+
+// Hàm Đếm Ngược Chính
+const x = setInterval(function() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    // Tính toán thời gian
     const days = Math.floor(distance / (1000 * 60 * 60 * 24));
     const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    document.getElementById("days").innerHTML = String(days).padStart(2, '0');
-    document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
-    document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
-    document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
-}
+    // Hiển thị ra màn hình
+    document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+    document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+    document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+    document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
 
-/* --- HÀM KÍCH HOẠT HIỆU ỨNG CHÚC MỪNG --- */
-function showSurprise() {
-    countdownContainer.classList.add('hidden');
-    
-    // Đổi nền và hiện container chúc mừng
-    document.body.style.backgroundImage = 'none'; 
-    document.body.style.backgroundColor = '#290033'; 
-    surpriseContainer.classList.remove('hidden');
-    
-    setTimeout(() => {
-        surpriseContainer.style.opacity = '1';
-        typeLetter(); // Bắt đầu chạy chữ
-        startFireworks(); // Bắt đầu pháo hoa
-    }, 100); 
-    
-    document.title = "🎉 Happy Birthday! 🎉";
-}
-
-/* --- HÀM CHẠY CHỮ (TYPING EFFECT) --- */
-function typeLetter() {
-    if (charIndex < message.length) {
-        // Nếu gặp ký tự xuống dòng (\n) thì thêm <br>
-        if (message.charAt(charIndex) === '\n') {
-            typedMessageSpan.innerHTML += '<br>';
-        } else {
-            typedMessageSpan.textContent += message.charAt(charIndex);
-        }
-        charIndex++;
-        setTimeout(typeLetter, typingSpeed);
-    } else {
-        // Sau khi chạy chữ xong, hiện chữ ký và ảnh
-        signatureText.style.opacity = '1';
-        animatePhotos();
+    // KHI ĐẾM NGƯỢC KẾT THÚC
+    if (distance < 0) {
+        clearInterval(x);
+        
+        // 1. Ẩn trang đếm ngược
+        page1.style.display = 'none';
+        
+        // 2. Hiện trang chúc mừng (đổi từ display:none sang flex)
+        page2.style.display = 'flex';
+        
+        // 3. Kích hoạt hiệu ứng
+        startFireworks(); // Bắn pháo hoa
+        typeWriter();     // Chạy chữ và sau đó hiện ảnh
     }
-}
-
-/* --- HÀM HIỆN ẢNH CÓ ĐỘ TRỄ --- */
-function animatePhotos() {
-    photos.forEach((photo, index) => {
-        // Bắt đầu hiện ảnh sau khi lời chúc chạy xong
-        const delay = (index * 0.4) + 1.0; 
-        
-        setTimeout(() => {
-            photo.classList.add('photo-animate');
-        }, delay * 1000);
-    });
-}
-
-/* --- HÀM KÍCH HOẠT PHÁO HOA --- */
-function startFireworks() {
-    // Chỉ kích hoạt nếu thư viện đã được nhúng trong HTML
-    if (typeof Fireworks !== 'undefined') {
-        const container = document.getElementById('fireworks-canvas');
-        container.style.display = 'block';
-        
-        const fireworks = new Fireworks.default(container, {
-            autoresize: true,
-            opacity: 0.9,
-            acceleration: 1.05,
-            friction: 0.97,
-            gravity: 1.5,
-            speed: 5,
-            particles: 50,
-            trace: 3,
-            explosion: 5,
-            flickering: 50,
-        });
-        
-        fireworks.start();
-    }
-}
-
-
-// Chạy hàm đếm ngược
-const countdownInterval = setInterval(updateCountdown, 1000);
-updateCountdown();
+}, 1000);
