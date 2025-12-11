@@ -10,13 +10,14 @@ body {
     margin: 0;
     transition: background-color 1s ease-in-out;
     /* --- ẢNH NỀN CHO MÀN HÌNH CHỜ --- */
-    background-image: url('anhnen.jpg'); /* ĐỔI TÊN ẢNH CỦA BẠN */
+    background-image: url('anhnen.jpg'); /* CHỈNH LẠI TÊN TỆP ẢNH NỀN CỦA BẠN NẾU CẦN */
     background-size: cover; 
     background-position: center;
 }
 
+/* RẤT QUAN TRỌNG: Ẩn phần chúc mừng cho đến khi JS kích hoạt */
 .hidden {
-    display: none !important;
+    display: none !important; 
 }
 
 /* Hiệu ứng che phủ để làm nổi bật chữ trên ảnh nền */
@@ -33,7 +34,7 @@ body {
     color: #FFD700;
 }
 #countdown-timer {
-    font-size: 4.5em; /* Lớn hơn */
+    font-size: 4.5em; 
     font-weight: bold;
     color: #FF69B4;
     text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
@@ -47,17 +48,23 @@ body {
 #surprise-container {
     padding: 30px;
     max-width: 900px;
-    opacity: 0; 
+    opacity: 0; /* Sẽ hiện dần khi JS kích hoạt */
     transition: opacity 1s ease-in;
-    background-color: transparent; /* Không cần nền khi chuyển đổi */
+    background-color: transparent; 
 }
 
 .reveal-title {
     font-size: 3em;
     color: #00FFFF;
     margin-bottom: 40px;
+    /* Animation tiêu đề */
     animation: fadeInSlide 1.5s ease-out forwards; 
     animation-delay: 0.5s;
+}
+
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(-30px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 /* Định kiểu cho hộp lời chúc chạy chữ */
@@ -72,7 +79,7 @@ body {
 #typed-message {
     font-size: 1.3em;
     line-height: 1.8;
-    white-space: pre-wrap; /* Quan trọng để hiển thị xuống dòng chính xác */
+    white-space: pre-wrap; /* Quan trọng cho việc xuống dòng của lời chúc */
 }
 .signature-text {
     font-style: italic;
@@ -80,7 +87,7 @@ body {
     text-align: right;
     margin-top: 20px;
     opacity: 0; /* Ẩn chữ ký */
-    transition: opacity 1s ease 1s; /* Hiện chữ ký sau 1s khi lời chúc kết thúc */
+    transition: opacity 1s ease 1s; 
 }
 
 /* Bộ sưu tập ảnh */
@@ -98,11 +105,11 @@ body {
     border-radius: 50%;
     border: 5px solid #FFD700;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    opacity: 0;
+    opacity: 0; 
     transform: scale(0.8); 
 }
 
-/* Animation ảnh */
+/* Animation hiện ảnh */
 @keyframes photoReveal {
     from { opacity: 0; transform: scale(0.8) translateY(20px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
@@ -120,6 +127,6 @@ body {
     width: 100%;
     height: 100%;
     z-index: 9999; 
-    pointer-events: none; /* Cho phép nhấp xuyên qua pháo hoa */
+    pointer-events: none; 
     display: none;
 }
