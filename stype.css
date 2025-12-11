@@ -1,6 +1,6 @@
 body {
     font-family: 'Arial', sans-serif;
-    background-color: #121212; /* Nền tối sang trọng */
+    background-color: #121212;
     color: #ffffff;
     text-align: center;
     display: flex;
@@ -9,57 +9,78 @@ body {
     min-height: 100vh;
     margin: 0;
     transition: background-color 1s ease-in-out;
+    /* --- ẢNH NỀN CHO MÀN HÌNH CHỜ --- */
+    background-image: url('anhnen.jpg'); /* ĐỔI TÊN ẢNH CỦA BẠN */
+    background-size: cover; 
+    background-position: center;
 }
 
 .hidden {
     display: none !important;
 }
 
-/* --- PHẦN ĐẾM NGƯỢC --- */
+/* Hiệu ứng che phủ để làm nổi bật chữ trên ảnh nền */
 #countdown-container {
-    padding: 20px;
+    padding: 40px;
+    background-color: rgba(0, 0, 0, 0.5); /* Lớp phủ đen trong suốt */
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+    z-index: 10;
 }
+
 #countdown-container h1 {
     font-size: 2.5em;
     color: #FFD700;
-    margin-bottom: 20px;
 }
 #countdown-timer {
-    font-size: 3.5em;
+    font-size: 4.5em; /* Lớn hơn */
     font-weight: bold;
-    letter-spacing: 3px;
-    margin-bottom: 30px;
     color: #FF69B4;
+    text-shadow: 0 0 10px rgba(255, 105, 180, 0.8);
 }
-#countdown-timer span {
-    display: inline-block;
-    min-width: 60px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px;
-    border-radius: 8px;
-    margin: 0 5px;
+.wait-text {
+    font-style: italic;
+    color: #ccc;
 }
 
 /* --- PHẦN BẤT NGỜ VÀ ANIMATION --- */
 #surprise-container {
     padding: 30px;
     max-width: 900px;
-    opacity: 0; /* Ẩn trước khi JS hiện ra */
+    opacity: 0; 
     transition: opacity 1s ease-in;
+    background-color: transparent; /* Không cần nền khi chuyển đổi */
 }
 
-/* Animation cho tiêu đề chính */
-@keyframes fadeInSlide {
-    from { opacity: 0; transform: translateY(-30px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-#surprise-container h1 {
+.reveal-title {
     font-size: 3em;
     color: #00FFFF;
     margin-bottom: 40px;
     animation: fadeInSlide 1.5s ease-out forwards; 
     animation-delay: 0.5s;
+}
+
+/* Định kiểu cho hộp lời chúc chạy chữ */
+.message-box {
+    text-align: left;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
+
+#typed-message {
+    font-size: 1.3em;
+    line-height: 1.8;
+    white-space: pre-wrap; /* Quan trọng để hiển thị xuống dòng chính xác */
+}
+.signature-text {
+    font-style: italic;
+    color: #FF69B4;
+    text-align: right;
+    margin-top: 20px;
+    opacity: 0; /* Ẩn chữ ký */
+    transition: opacity 1s ease 1s; /* Hiện chữ ký sau 1s khi lời chúc kết thúc */
 }
 
 /* Bộ sưu tập ảnh */
@@ -77,11 +98,11 @@ body {
     border-radius: 50%;
     border: 5px solid #FFD700;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    opacity: 0; /* ẨN HOÀN TOÀN TRƯỚC KHI KÍCH HOẠT JS */
+    opacity: 0;
     transform: scale(0.8); 
 }
 
-/* Hiệu ứng hiện ảnh (Dùng JS để thêm class này khi cần) */
+/* Animation ảnh */
 @keyframes photoReveal {
     from { opacity: 0; transform: scale(0.8) translateY(20px); }
     to { opacity: 1; transform: scale(1) translateY(0); }
@@ -91,25 +112,14 @@ body {
     animation: photoReveal 1s ease-out forwards;
 }
 
-.message p {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin: 15px 0;
-}
-
-.signature {
-    font-style: italic;
-    color: #FF69B4;
-    margin-top: 30px !important;
-}
-
-/* --- PHÁO HOA (Tùy chọn) --- */
+/* Pháo hoa */
 #fireworks-canvas {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: -1; /* Đảm bảo nó nằm dưới nội dung */
+    z-index: 9999; 
+    pointer-events: none; /* Cho phép nhấp xuyên qua pháo hoa */
     display: none;
 }
