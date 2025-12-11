@@ -1,8 +1,56 @@
-/* --- CSS HIỆU ỨNG THÊM MỚI/CẬP NHẬT --- */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #121212; /* Nền tối sang trọng */
+    color: #ffffff;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    transition: background-color 1s ease-in-out;
+}
 
-/* Hiệu ứng Fade In cho lời chúc chính */
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(-20px); }
+.hidden {
+    display: none !important;
+}
+
+/* --- PHẦN ĐẾM NGƯỢC --- */
+#countdown-container {
+    padding: 20px;
+}
+#countdown-container h1 {
+    font-size: 2.5em;
+    color: #FFD700;
+    margin-bottom: 20px;
+}
+#countdown-timer {
+    font-size: 3.5em;
+    font-weight: bold;
+    letter-spacing: 3px;
+    margin-bottom: 30px;
+    color: #FF69B4;
+}
+#countdown-timer span {
+    display: inline-block;
+    min-width: 60px;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    margin: 0 5px;
+}
+
+/* --- PHẦN BẤT NGỜ VÀ ANIMATION --- */
+#surprise-container {
+    padding: 30px;
+    max-width: 900px;
+    opacity: 0; /* Ẩn trước khi JS hiện ra */
+    transition: opacity 1s ease-in;
+}
+
+/* Animation cho tiêu đề chính */
+@keyframes fadeInSlide {
+    from { opacity: 0; transform: translateY(-30px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
@@ -10,12 +58,18 @@
     font-size: 3em;
     color: #00FFFF;
     margin-bottom: 40px;
-    opacity: 0; /* Ban đầu ẩn */
-    animation: fadeIn 1.5s forwards; /* Kích hoạt khi hiện ra */
-    animation-delay: 0.5s; /* Chờ 0.5s rồi mới hiện */
+    animation: fadeInSlide 1.5s ease-out forwards; 
+    animation-delay: 0.5s;
 }
 
-/* Định kiểu cho ảnh (Ban đầu ẩn) */
+/* Bộ sưu tập ảnh */
+.photo-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
 .gallery-item {
     width: 200px;
     height: 200px;
@@ -24,7 +78,7 @@
     border: 5px solid #FFD700;
     box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
     opacity: 0; /* ẨN HOÀN TOÀN TRƯỚC KHI KÍCH HOẠT JS */
-    transform: scale(0.8); /* Ban đầu nhỏ lại */
+    transform: scale(0.8); 
 }
 
 /* Hiệu ứng hiện ảnh (Dùng JS để thêm class này khi cần) */
@@ -35,4 +89,27 @@
 
 .photo-animate {
     animation: photoReveal 1s ease-out forwards;
+}
+
+.message p {
+    font-size: 1.2em;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+.signature {
+    font-style: italic;
+    color: #FF69B4;
+    margin-top: 30px !important;
+}
+
+/* --- PHÁO HOA (Tùy chọn) --- */
+#fireworks-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Đảm bảo nó nằm dưới nội dung */
+    display: none;
 }
