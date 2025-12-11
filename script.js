@@ -1,6 +1,8 @@
 // --- CẤU HÌNH ---
 // Đổi ngày giờ sinh nhật tại đây (Tháng/Ngày/Năm Giờ:Phút:Giây)
-const targetDate = new Date("December 11, 2025 20:14:00").getTime();
+//const targetDate = new Date("December 11, 2025 20:14:00").getTime();
+// Đếm ngược 10 giây tính từ lúc mở web
+const targetDate = new Date().getTime() + 10000;
 
 // Lời chúc của bạn (dùng \n để xuống dòng)
 const message = "Chúc mừng sinh nhật em yêu! 🎉\nTuổi mới rực rỡ, xinh đẹp và luôn hạnh phúc nhé.\nAnh luôn ở đây bên em. Yêu em nhiều! ❤️";
@@ -94,5 +96,6 @@ const x = setInterval(function() {
         typeWriter();     // Chạy chữ và sau đó hiện ảnh
     }
 }, 1000);
+
 
 
