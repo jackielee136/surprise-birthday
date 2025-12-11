@@ -1,12 +1,14 @@
-// **BƯỚC 1: ĐẶT NGÀY SINH NHẬT CHÍNH XÁC**
-// Ngày hiện tại là 11/12/2025. Nếu muốn làm bất ngờ vào ngày 12/12/2025 lúc 00:00:00
+// **BƯỚC 1: CẦN CHỈNH SỬA NGÀY SINH NHẬT TẠI ĐÂY**
+// Đặt ngày và giờ chính xác bạn muốn bất ngờ (Tháng ngày, Năm Giờ:Phút:Giây)
+// Ví dụ: Ngày 12/12/2025 lúc 00:00:00
 const birthdayDate = new Date("December 12, 2025 00:00:00").getTime(); 
 
-// **BƯỚC 2: LỜI CHÚC (SẼ CHẠY CHỮ)**
+// **BƯỚC 2: CẦN CHỈNH SỬA LỜI CHÚC TẠI ĐÂY**
+// Dùng \n để xuống dòng (newline)
 const message = `Tuy giấy tờ là 12/1, nhưng hôm nay mới là ngày Anh muốn tri ân người con gái tuyệt vời nhất trong đời. Cảm ơn em đã đến bên Anh. Chúc em luôn hạnh phúc, xinh đẹp và mỉm cười thật tươi!
-Anh yêu em rất nhiều.`;
+\nAnh yêu em rất nhiều.`;
 let charIndex = 0;
-const typingSpeed = 50; // Tốc độ chạy chữ (ms)
+const typingSpeed = 50; 
 
 // Khai báo các biến DOM
 const countdownContainer = document.getElementById("countdown-container");
@@ -14,7 +16,7 @@ const surpriseContainer = document.getElementById("surprise-container");
 const typedMessageSpan = document.getElementById('typed-message');
 const signatureText = document.getElementById('signature-text');
 const photos = document.querySelectorAll('.gallery-item');
-// const musicElement = document.getElementById("bday-music"); // Nếu dùng nhạc
+
 
 /* --- HÀM CHÍNH CHO ĐẾM NGƯỢC --- */
 function updateCountdown() {
@@ -42,16 +44,15 @@ function updateCountdown() {
 function showSurprise() {
     countdownContainer.classList.add('hidden');
     
-    // Đổi màu nền & hiện container chúc mừng
-    document.body.style.backgroundImage = 'none'; // Xóa ảnh nền chờ
+    // Đổi nền và hiện container chúc mừng
+    document.body.style.backgroundImage = 'none'; 
     document.body.style.backgroundColor = '#290033'; 
     surpriseContainer.classList.remove('hidden');
     
     setTimeout(() => {
         surpriseContainer.style.opacity = '1';
-        // musicElement?.play(); // Kích hoạt nhạc (Nếu có)
-        typeLetter();
-        startFireworks();
+        typeLetter(); // Bắt đầu chạy chữ
+        startFireworks(); // Bắt đầu pháo hoa
     }, 100); 
     
     document.title = "🎉 Happy Birthday! 🎉";
@@ -60,7 +61,12 @@ function showSurprise() {
 /* --- HÀM CHẠY CHỮ (TYPING EFFECT) --- */
 function typeLetter() {
     if (charIndex < message.length) {
-        typedMessageSpan.textContent += message.charAt(charIndex);
+        // Nếu gặp ký tự xuống dòng (\n) thì thêm <br>
+        if (message.charAt(charIndex) === '\n') {
+            typedMessageSpan.innerHTML += '<br>';
+        } else {
+            typedMessageSpan.textContent += message.charAt(charIndex);
+        }
         charIndex++;
         setTimeout(typeLetter, typingSpeed);
     } else {
@@ -73,7 +79,7 @@ function typeLetter() {
 /* --- HÀM HIỆN ẢNH CÓ ĐỘ TRỄ --- */
 function animatePhotos() {
     photos.forEach((photo, index) => {
-        // Bắt đầu hiện ảnh sau khi lời chúc chạy xong (khoảng 1s sau)
+        // Bắt đầu hiện ảnh sau khi lời chúc chạy xong
         const delay = (index * 0.4) + 1.0; 
         
         setTimeout(() => {
@@ -84,24 +90,26 @@ function animatePhotos() {
 
 /* --- HÀM KÍCH HOẠT PHÁO HOA --- */
 function startFireworks() {
-    const container = document.getElementById('fireworks-canvas');
-    container.style.display = 'block';
-    
-    // Kích hoạt thư viện pháo hoa đã nhúng (js-fireworks)
-    const fireworks = new Fireworks.default(container, {
-        autoresize: true,
-        opacity: 0.9,
-        acceleration: 1.05,
-        friction: 0.97,
-        gravity: 1.5,
-        speed: 5,
-        particles: 50,
-        trace: 3,
-        explosion: 5,
-        flickering: 50,
-    });
-    
-    fireworks.start();
+    // Chỉ kích hoạt nếu thư viện đã được nhúng trong HTML
+    if (typeof Fireworks !== 'undefined') {
+        const container = document.getElementById('fireworks-canvas');
+        container.style.display = 'block';
+        
+        const fireworks = new Fireworks.default(container, {
+            autoresize: true,
+            opacity: 0.9,
+            acceleration: 1.05,
+            friction: 0.97,
+            gravity: 1.5,
+            speed: 5,
+            particles: 50,
+            trace: 3,
+            explosion: 5,
+            flickering: 50,
+        });
+        
+        fireworks.start();
+    }
 }
 
 
