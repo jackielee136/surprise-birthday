@@ -1,98 +1,65 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #121212; /* Nền tối sang trọng */
-    color: #ffffff;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    transition: background-color 1s ease-in-out; /* Chuyển đổi màu nền mượt mà */
-}
+// **BƯỚC 1: ĐẶT NGÀY SINH NHẬT CHÍNH XÁC**
+// Đặt ngày sinh nhật TẠI ĐÂY (Năm, Tháng-1, Ngày, Giờ, Phút, Giây)
+// Ví dụ: Ngày 12/12/2025 lúc 0 giờ 0 phút 0 giây (00:00:00)
+// HÃY ĐỔI SANG NĂM HIỆN TẠI HOẶC TƯƠNG LAI BẠN MUỐN
+const birthdayDate = new Date("December 12, 2025 00:00:00").getTime(); 
 
-/* Định kiểu cho đồng hồ đếm ngược */
-#countdown-container h1 {
-    font-size: 2.5em;
-    color: #FFD700; /* Vàng */
-    margin-bottom: 20px;
-}
+// Hàm cập nhật bộ đếm
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = birthdayDate - now;
 
-#countdown-timer {
-    font-size: 3.5em;
-    font-weight: bold;
-    letter-spacing: 3px;
-    margin-bottom: 30px;
-    color: #FF69B4; /* Hồng */
-}
+    // Tính toán thời gian
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-#countdown-timer span {
-    display: inline-block;
-    min-width: 60px;
-    background: rgba(255, 255, 255, 0.1);
-    padding: 10px;
-    border-radius: 8px;
-    margin: 0 5px;
-}
+    // Hiển thị kết quả trong các thẻ HTML
+    document.getElementById("days").innerHTML = String(days).padStart(2, '0');
+    document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
+    document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
+    document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
 
-/* Định kiểu cho phần bất ngờ */
-#surprise-container {
-    padding: 30px;
-    max-width: 900px;
-}
-
-#surprise-container h1 {
-    font-size: 3em;
-    color: #00FFFF; /* Xanh ngọc */
-    margin-bottom: 40px;
-}
-
-.hidden {
-    display: none;
-}
-
-/* Bộ sưu tập ảnh */
-.photo-gallery {
-    display: flex;
-    justify-content: center;
-    gap: 20px;
-    margin-bottom: 30px;
-}
-
-.gallery-item {
-    width: 200px;
-    height: 200px;
-    object-fit: cover; /* Đảm bảo ảnh vừa khung */
-    border-radius: 50%; /* Ảnh tròn */
-    border: 5px solid #FFD700;
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-    transition: transform 0.5s ease;
-}
-
-.gallery-item:hover {
-    transform: scale(1.05);
-}
-
-.message p {
-    font-size: 1.2em;
-    line-height: 1.6;
-    margin: 15px 0;
-}
-
-.signature {
-    font-style: italic;
-    color: #FF69B4;
-    margin-top: 30px !important;
-}
-
-/* Hiệu ứng Fade In cho lời chúc */
-.fade-in {
-    opacity: 0;
-    animation: fadeIn 2s forwards;
-}
-
-@keyframes fadeIn {
-    to {
-        opacity: 1;
+    // **BƯỚC 2: KHI BỘ ĐẾM KẾT THÚC**
+    if (distance < 0) {
+        clearInterval(countdownInterval);
+        showSurprise();
     }
 }
+
+// Hàm hiển thị nội dung bất ngờ và kích hoạt animation ảnh
+function showSurprise() {
+    // Ẩn container đếm ngược và hiện container chúc mừng
+    document.getElementById("countdown-container").classList.add('hidden');
+    document.getElementById("surprise-container").classList.remove('hidden');
+    
+    // Đổi màu nền sang màu lễ hội hơn
+    document.body.style.backgroundColor = '#290033'; 
+
+    // **BƯỚC 3: KÍCH HOẠT ANIMATION ẢNH CÓ ĐỘ TRỄ**
+    // Lấy danh sách ảnh
+    const photos = document.querySelectorAll('.gallery-item');
+    
+    // Lặp qua từng ảnh và thêm class animation với độ trễ tăng dần
+    photos.forEach((photo, index) => {
+        // Độ trễ (delay) cho mỗi ảnh: 0s, 0.4s, 0.8s, ...
+        const delay = (index * 0.4) + 2.0; // Bắt đầu sau 2.0s để lời chúc hiện ra trước
+        
+        // Dùng setTimeout để thêm class animation sau độ trễ
+        setTimeout(() => {
+            photo.classList.add('photo-animate');
+        }, delay * 1000); // Nhân 1000 để chuyển từ giây sang mili giây
+    });
+
+    // Thêm hiệu ứng pháo hoa (Nếu bạn muốn, cần thêm thư viện)
+    // startFireworks();
+    
+    document.title = "🎉 Happy Birthday! 🎉";
+}
+
+// Chạy hàm đếm ngược mỗi giây
+const countdownInterval = setInterval(updateCountdown, 1000);
+
+// Chạy lần đầu tiên để tránh bị độ trễ 1 giây
+updateCountdown();
