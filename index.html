@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bí Mật Dành Cho Em - 12/12</title>
-    <link rel="stylesheet" href="style.css"> 
-</head>
+    <title>Bí Mật Dành Cho Em</title>
+    <link rel="stylesheet" href="style.css">
+    </head>
 <body>
 
     <div id="countdown-container">
@@ -23,9 +23,9 @@
         <h1 class="fade-in">🎉 Chúc mừng Sinh nhật 12/12, Công chúa của Anh! 🎉</h1>
         
         <div class="photo-gallery">
-            <img src="anh1.jpg" alt="Kỷ niệm 1" class="gallery-item">
-            <img src="anh2.jpg" alt="Kỷ niệm 2" class="gallery-item">
-            <img src="anh3.jpg" alt="Kỷ niệm 3" class="gallery-item">
+            <img src="anh1.jpg" alt="Kỷ niệm 1" class="gallery-item" id="photo1">
+            <img src="anh2.jpg" alt="Kỷ niệm 2" class="gallery-item" id="photo2">
+            <img src="anh3.jpg" alt="Kỷ niệm 3" class="gallery-item" id="photo3">
         </div>
         
         <div class="message">
@@ -34,10 +34,8 @@
         </div>
     </div>
     
-    <div id="fireworks-container"></div>
-    
-    <script src="script.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/tsparticles@1.43.0/tsparticles.min.js"></script>
-</body>
+    <canvas id="fireworks-canvas"></canvas>
 
+    <script src="script.js"></script>
+</body>
 </html>
