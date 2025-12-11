@@ -1,48 +1,38 @@
-// Đặt ngày sinh nhật TẠI ĐÂY (Năm, Tháng-1, Ngày, Giờ, Phút, Giây)
-// Ví dụ: Ngày 12/12/2025 lúc 0 giờ 0 phút 0 giây (00:00:00)
-const birthdayDate = new Date("December 12, 2025 00:00:00").getTime();
+/* --- CSS HIỆU ỨNG THÊM MỚI/CẬP NHẬT --- */
 
-// Hàm cập nhật bộ đếm
-function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = birthdayDate - now;
-
-    // Tính toán thời gian
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-    // Hiển thị kết quả trong các thẻ HTML
-    document.getElementById("days").innerHTML = String(days).padStart(2, '0');
-    document.getElementById("hours").innerHTML = String(hours).padStart(2, '0');
-    document.getElementById("minutes").innerHTML = String(minutes).padStart(2, '0');
-    document.getElementById("seconds").innerHTML = String(seconds).padStart(2, '0');
-
-    // Khi bộ đếm kết thúc (distance < 0)
-    if (distance < 0) {
-        clearInterval(countdownInterval);
-        showSurprise();
-    }
+/* Hiệu ứng Fade In cho lời chúc chính */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-// Hàm hiển thị nội dung bất ngờ
-function showSurprise() {
-    document.getElementById("countdown-container").classList.add('hidden');
-    document.getElementById("surprise-container").classList.remove('hidden');
-    
-    // Đổi màu nền sang màu lễ hội hơn
-    document.body.style.backgroundColor = '#290033'; 
-
-    // Tùy chọn: Chơi nhạc hoặc kích hoạt hiệu ứng pháo hoa tại đây
-    // Ví dụ: playMusic(); startFireworks();
-    
-    // Thay đổi tiêu đề trang
-    document.title = "🎉 Happy Birthday! 🎉";
+#surprise-container h1 {
+    font-size: 3em;
+    color: #00FFFF;
+    margin-bottom: 40px;
+    opacity: 0; /* Ban đầu ẩn */
+    animation: fadeIn 1.5s forwards; /* Kích hoạt khi hiện ra */
+    animation-delay: 0.5s; /* Chờ 0.5s rồi mới hiện */
 }
 
-// Chạy hàm đếm ngược mỗi giây
-const countdownInterval = setInterval(updateCountdown, 1000);
+/* Định kiểu cho ảnh (Ban đầu ẩn) */
+.gallery-item {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 5px solid #FFD700;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+    opacity: 0; /* ẨN HOÀN TOÀN TRƯỚC KHI KÍCH HOẠT JS */
+    transform: scale(0.8); /* Ban đầu nhỏ lại */
+}
 
-// Chạy lần đầu tiên để tránh bị độ trễ 1 giây
-updateCountdown();
+/* Hiệu ứng hiện ảnh (Dùng JS để thêm class này khi cần) */
+@keyframes photoReveal {
+    from { opacity: 0; transform: scale(0.8) translateY(20px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.photo-animate {
+    animation: photoReveal 1s ease-out forwards;
+}
