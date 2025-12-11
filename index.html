@@ -3,41 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bí Mật Dành Cho Em - Sắp Ra Mắt!</title>
-    <link rel="stylesheet" href="style.css">
-    </head>
+    <title>Gửi người đặc biệt</title>
+    <link rel="stylesheet" href="style.css?v=2">
+</head>
 <body>
-    
-    <canvas id="fireworks-canvas"></canvas>
 
-    <div id="countdown-container">
-        <h1>Một điều bất ngờ sắp đến...</h1>
-        <div id="countdown-timer">
-            <span id="days">00</span> Ngày
-            <span id="hours">00</span> Giờ
-            <span id="minutes">00</span> Phút
-            <span id="seconds">00</span> Giây
+    <div id="countdown-page">
+        <div class="content-box">
+            <h1>Sắp đến giờ G rồi...</h1>
+            <div id="timer">
+                <div class="time-box"><span id="days">00</span><br>Ngày</div>
+                <div class="time-box"><span id="hours">00</span><br>Giờ</div>
+                <div class="time-box"><span id="minutes">00</span><br>Phút</div>
+                <div class="time-box"><span id="seconds">00</span><br>Giây</div>
+            </div>
+            <p>Chờ đợi là hạnh phúc ❤️</p>
         </div>
-        <p class="wait-text">Kiên nhẫn chờ đợi nhé, Tình yêu của Anh!</p>
     </div>
 
-    <div id="surprise-container" class="hidden">
-        <h1 class="reveal-title">🎉 Chúc mừng Sinh nhật 12/12, Công chúa của Anh! 🎉</h1>
+    <div id="surprise-page" style="display: none;">
         
-        <div class="photo-gallery">
-            <img src="anh1.jpg" alt="Kỷ niệm 1" class="gallery-item" id="photo1">
-            <img src="anh2.jpg" alt="Kỷ niệm 2" class="gallery-item" id="photo2">
-            <img src="anh3.jpg" alt="Kỷ niệm 3" class="gallery-item" id="photo3">
-        </div>
-        
-        <div class="message-box">
-            <span id="typed-message"></span>
-            <p class="signature-text" id="signature-text">- Người yêu tuyệt vời của Em -</p>
+        <canvas id="fireworks"></canvas>
+
+        <div class="surprise-content">
+            <div id="typing-text"></div>
+            
+            <div class="gallery">
+                <img src="anh1.jpg" class="photo p1" alt="Ảnh 1">
+                <img src="anh2.jpg" class="photo p2" alt="Ảnh 2">
+                <img src="anh3.jpg" class="photo p3" alt="Ảnh 3">
+            </div>
         </div>
     </div>
-    
-    <script src="script.js"></script>
-    
-    <script src="https://cdn.jsdelivr.net/npm/js-fireworks@1.1.2/js/index.umd.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="script.js?v=2"></script>
 </body>
 </html>
